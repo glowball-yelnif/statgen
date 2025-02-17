@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Statistical Research Solutions Inc.</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Wrapper to push footer to the bottom -->
+  <div class="wrapper">
+    <!-- Header with Business Name -->
+    <header class="banner text-center py-5 mb-4">
+      <h1>Statistical Research Solutions Inc.</h1>
+      <p class="lead">Innovative Data Analysis & Research</p>
+    </header>
+
+    <!-- Main Content -->
+    <main class="content">
+      <div class="container my-5">
+        <!-- Responsive Buttons: stacked on mobile, side-by-side on larger screens -->
+        <div class="d-flex flex-column flex-sm-row justify-content-around mb-3">
+          <!-- Button 1: Open modal with dropdown -->
+          <button type="button" class="btn btn-primary mb-2 mb-sm-0" data-bs-toggle="modal" data-bs-target="#dropdownModal">
+            Select Card Number
+          </button>
+
+          <!-- Button 2: Open modal with card images -->
+          <button type="button" class="btn btn-secondary mb-2 mb-sm-0" data-bs-toggle="modal" data-bs-target="#cardsModal">
+            View Cards
+          </button>
+
+          <!-- Button 3: Calculation button -->
+          <button type="button" class="btn btn-success" id="calcButton">
+            Calculate
+          </button>
+        </div>
+
+        <!-- Display selected values -->
+        <div class="row">
+          <div class="col text-center" id="selectedDropdownDisplay">
+            Dropdown selection: None.
+          </div>
+          <div class="col text-center" id="selectedCardValueDisplay">
+            Card selection: None.
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal 1: Dropdown Modal (No Save Button) -->
+      <div class="modal fade" id="dropdownModal" tabindex="-1" aria-labelledby="dropdownModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content shadow">
+            <div class="modal-header">
+              <h5 class="modal-title" id="dropdownModalLabel">Select a Card Number</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <select class="form-select" id="cardNumberSelect">
+                <option value="">Select a number</option>
+                <!-- Options populated by script.js -->
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal 2: Cards Modal -->
+      <div class="modal fade" id="cardsModal" tabindex="-1" aria-labelledby="cardsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content shadow">
+            <div class="modal-header">
+              <h5 class="modal-title" id="cardsModalLabel">Playing Cards</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body scrollable-container">
+              <div class="row" id="cardsContainer">
+                <!-- Card images injected by script.js -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Footer (always at bottom) -->
+  <footer class="footer text-center py-3">
+    <p>© 2025 Statistical Research Solutions Inc. All rights reserved.</p>
+  </footer>
+
+  <!-- Bootstrap Bundle JS (with Popper) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Custom JavaScript -->
+  <script src="script.js"></script>
+</body>
+</html>

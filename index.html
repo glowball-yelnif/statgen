@@ -27,12 +27,12 @@
         <div class="d-flex flex-column flex-sm-row justify-content-around mb-3">
           <!-- Button 1: Open modal with dropdown -->
           <button type="button" class="btn btn-primary mb-2 mb-sm-0" data-bs-toggle="modal" data-bs-target="#dropdownModal">
-            Select Card Number
+            Select Card Position
           </button>
 
           <!-- Button 2: Open modal with card images -->
           <button type="button" class="btn btn-secondary mb-2 mb-sm-0" data-bs-toggle="modal" data-bs-target="#cardsModal">
-            View Cards
+            Select a Playing Card
           </button>
 
           <!-- Button 3: Calculation button -->
@@ -44,7 +44,7 @@
         <!-- Display selected values -->
         <div class="row">
           <div class="col text-center" id="selectedDropdownDisplay">
-            Dropdown selection: None.
+            Position selection: None.
           </div>
           <div class="col text-center" id="selectedCardValueDisplay">
             Card selection: None.
@@ -57,12 +57,12 @@
         <div class="modal-dialog">
           <div class="modal-content shadow">
             <div class="modal-header">
-              <h5 class="modal-title" id="dropdownModalLabel">Select a Card Number</h5>
+              <h5 class="modal-title" id="dropdownModalLabel">Select Card Position</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
               <select class="form-select" id="cardNumberSelect">
-                <option value="">Select a number</option>
+                <option value="">Select Card Position</option>
                 <!-- Options populated by script.js -->
               </select>
             </div>
@@ -75,7 +75,7 @@
         <div class="modal-dialog modal-lg">
           <div class="modal-content shadow">
             <div class="modal-header">
-              <h5 class="modal-title" id="cardsModalLabel">Playing Cards</h5>
+              <h5 class="modal-title" id="cardsModalLabel">Select a Playing Card</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body scrollable-container">

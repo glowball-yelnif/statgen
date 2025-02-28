@@ -1,0 +1,22 @@
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+label {
+    margin-right: 10px;
+}
+input, select, button {
+    padding: 5px;
+    margin: 5px 0;
+}
+#result {
+    margin-top: 20px;
+    font-weight: bold;
+}

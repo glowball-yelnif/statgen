@@ -1,154 +1,221 @@
-// script.js
-document.addEventListener("DOMContentLoaded", function () {
-  let selectedDropdownValue = null;
-  let selectedCardValue = null;
+const masterArrays = {
+'A': ["JS", "KC", "5C", "2H", "9S", "AS", "3H", "6C", "8D", "AC", "TS", "5H", "2D", "KD", "7D", "8C", "3S", "AD", "7S", "5S", "QD", "AH", "8S", "3D", "7H", "QH", "5D", "7C", "4H", "KH", "4D", "TD", "JC", "JH", "TC", "JD", "4S", "TH", "6H", "3C", "2S", "9H", "KS", "6S", "4C", "8H", "9C", "QS", "6D", "QC", "2C", "9D"], // Aronson stack above 
 
-  // Populate the dropdown with options 1 through 52.
-  const cardNumberSelect = document.getElementById("cardNumberSelect");
-  for (let i = 1; i <= 52; i++) {
-    const option = document.createElement("option");
-    option.value = i;
-    option.textContent = i;
-    cardNumberSelect.appendChild(option);
+'M': ["4C", "2H", "7D", "3C", "4H", "6D", "AS", "5H", "9S", "2S", "QH", "3D", "QC", "8H", "6S", "5S", "9H", "KC", "2D", "JH", "3S", "8S", "6H", "TC", "5D", "KD", "2C", "3H", "8D", "5C", "KS", "JD", "8C", "TS", "KH", "JC", "6S", "TH", "AD", "4S", "7H", "4D", "AC", "9C", "JS", "QD", "7C", "QS", "TD", "6C", "AH", "9D"], // Mnemonica stack above
+
+'W': ["6H", "AS", "8S", "9S", "KC", "JD", "5D", "AH", "3H", "9H", "3C", "7S", "7H", "2S", "QS", "2H", "QH", "6D", "2C", "KD", "4D", "4H", "JH", "6C", "4C", "TC", "4S", "JS", "2D", "3S", "9D", "7D", "AD", "JC", "8C", "5S", "AC", "QC", "QD", "5H", "7C", "TH", "9C", "TD", "8D", "3D", "8H", "5C", "6S", "KH", "TS", "KS"], // Nuclear White Sands stack above
+
+'R': ["QH", "2S", "5D", "8C", "JH", "KS", "TH", "7C", "4D", "AS", "8H", "5C", "2D", "QS", "9H", "6C", "3D", "TS", "7H", "4C", "AD", "JS", "9S", "6H", "3C", "KD", "QD", "TD", "7S", "4H", "AC", "JD", "8S", "5H", "2C", "2H", "QC", "9D", "6S", "3H", "KC", "4S", "AH", "JC", "8D", "5S", "3S", "KH", "TC", "7D", "6D", "9C"], // Redford stack above
+
+'S': ["8S", "JD", "AC", "4H", "7S", "TD", "KC", "3H", "6S", "9D", "QC", "2H", "5S", "8D", "JC", "AH", "4S", "7D", "TC", "KH", "3S", "6D", "9C", "QH", "2S", "5D", "8C", "JH", "AS", "4D", "7C", "TH", "KS", "3D", "6C", "9H", "QS", "2D", "5C", "8H", "JS", "AD", "4C", "7H", "TS", "KD", "3C", "6H", "9S", "QD", "2C", "5H"], // Stebbins Chased 8S top above
+
+'K': ["JS", "KC", "5C", "2H", "9S", "AS", "3H", "6C", "8D", "AC", "TS", "5H", "2D", "KD", "7D", "8C", "3S", "AD", "7S", "5S", "QD", "AH", "8S", "3D", "7H", "QH", "5D", "7C", "4H", "KH", "4D", "TD", "JC", "JH", "TC", "JD", "4S", "TH", "6H", "3C", "2S", "9H", "KS", "6S", "4C", "8H", "9C", "QS", "6D", "QC", "2C", "9D"], // Stebbins ShocKed 8S top above
+
+'T': ["4C", "5H", "2D", "AS", "QH", "5C", "8D", "TD", "3S", "KC", "JD", "3C", "TS", "9H", "5S", "QD", "6C", "3D", "7S", "4S", "6D", "JH", "4H", "9C", "JC", "4D", "6H", "6S", "JS", "7C", "2H", "KS", "8C", "2C", "AH", "TH", "QS", "7H", "9D", "KH", "QC", "8H", "AC", "8S", "TC", "2S", "AD", "9S", "5D", "KD", "3H", "7D"], // Tritium above
+};
+
+// Here are global variables that should make everything easier to reference
+// in parent functions and child functions and thus not use the complicated
+// "results" feature. This is a very small simple program therefore
+// global variables that can be changed and referenced anywhere
+// inside this program should make the coding syntax much simpler.
+
+// Note that variables that can be changed should be defined using
+// the LET statement, not the const statement. Use const if they are never changed.
+
+// The fact that these variables are defined outside of the functions
+// is what makes them "global".
+
+// Global Constants and Variables:
+    const defHitIndicator = "N";
+    const defFaceUp = "N";
+    const defPlus1Hit = "N";
+    const defBreatherCut = "9";
+    const defBottomPosition = "88";
+    const defBottomCard = "ZZ";
+
+    let retHitIndicator;
+    let retFaceUp;
+    let retPlus1Hit;
+    let retBreatherCut;
+    let retBottomPosition;
+    let retBottomCard;
+	
+	let tempDiff;
+    let	tempBottomPosition;
+	let actualPosition; 
+	let reverseActualPosition;
+	
+// end of global variables
+
+function setInitialDefaults() {
+        retHitIndicator = defHitIndicator;
+        retFaceUp = defFaceUp;
+        retPlus1Hit = defPlus1Hit;
+        retBreatherCut = defBreatherCut;
+        retBottomPosition = defBottomPosition;
+        retBottomCard = defBottomCard;
+		// note that the above fields are global
+    };
+
+function matchCardPosition(workArray, guessedCard) {
+	 console.log("Match  Card Position called");
+	
+     actualPosition = workArray.indexOf(guessedCard) + 1; // 1-based
+     console.log("actualPosition", actualPosition);
+
+	 reverseActualPosition = 53 - actualPosition;
+	 console.log("reverseActualPosition", reverseActualPosition);
+     // note that the above 2 fields are global
+}
+
+function determineBottomCard(workArray, guessedPosition, actualPosition) {
+    console.log("workArray",workArray);
+	console.log("guessedPosition",guessedPosition);
+	console.log("actualPosition",actualPosition);
+	
+    if (guessedPosition > actualPosition) {
+        tempDiff = guessedPosition - actualPosition;
+        tempBottomPosition = 52 - tempDiff;
+		console.log("guess is high vs actual, tempDiff=",tempDiff);
+  } else {
+        tempDiff = actualPosition - guessedPosition;
+        tempBottomPosition = tempDiff;
+		console.log("guess is =< vs actual, tempDiff=",tempDiff);
+    }
+    retBottomCard = workArray[tempBottomPosition - 1]; // Zero-based
+	// retBottomCard = retBottomCard - 1; // subtracting 1 more ?? modify tempDiff instead?? 
+    retBottomPosition = tempBottomPosition.toString().padStart(2, '0'); // Two digits
+	console.log("retBottomPosition=",retBottomPosition);
+}
+
+function detailSubroutine(workArray, guessedCard, guessedPosition, retBreatherCut) {
+	 console.log("++++++ detailSubroutine +++++++++++++");
+	 console.log("workArray", workArray);
+ 	 console.log("guessedCard", guessedCard);
+	 console.log("guessedPosition", guessedPosition);
+	 console.log("retBreatherCut", retBreatherCut);
+
+    // below sets the "ret" fields to "N" etc.
+        retHitIndicator = defHitIndicator;
+        retFaceUp = defFaceUp;
+        retPlus1Hit = defPlus1Hit;
+		// we don't want to reset the below in the 4 times loop detail
+        // retBreatherCut = defBreatherCut;
+        // retBottomPosition = defBottomPosition;
+        // retBottomCard = defBottomCard;
+		// note that the above fields are global
+
+
+    // below sets the actualPostion and the reverseActualPosition	
+	matchCardPosition(workArray, guessedCard);
+
+    if (guessedPosition === actualPosition || guessedPosition === actualPosition - 1) {
+        retHitIndicator = "Y";
+        retFaceUp = "N";
+    }
+    if (guessedPosition === reverseActualPosition || guessedPosition === reverseActualPosition - 1) {
+        retHitIndicator = "Y";
+        retFaceUp = "Y";
+    }
+    if (guessedPosition === actualPosition - 1 || guessedPosition === reverseActualPosition - 1) {
+        retPlus1Hit = "Y";
+    }
+
+    if (retBreatherCut === "0") {
+        determineBottomCard(workArray, guessedPosition, actualPosition);
+		// above ret fields now global so set by the determineBottomCard
+    }
+	 console.log("------ detail results below ------");
+	 console.log("retHitIndicator", retHitIndicator);
+	 console.log("retFaceUp", retFaceUp);
+	 console.log("retPlus1Hit", retPlus1Hit);
+	 console.log("retBreatherCut", retBreatherCut);
+	 console.log("retBottomPosition", retBottomPosition);
+	 console.log("retBottomCard", retBottomCard);
+	 console.log("----------------------------");
+}
+
+function intermediateSubroutine(workArray, guessedCard, guessedPosition) {
+    let currentArray = [...workArray]; // Copy to avoid modifying original
+
+    retBreatherCut = 0;
+    // First call, pristine array
+    detailSubroutine(currentArray, guessedCard, guessedPosition, "0");
+
+    console.log("***retHitIndicator***", retHitIndicator);
+   if (retHitIndicator === "N") {
+     // If we got a "Y" hit we don't want to try 
+	 // any breather cuts because the defaults
+	 // will wipe out the good results from the above hit.
+    // Shift by 13 and call three more times
+    for (let i = 1; i <= 3; i++) {
+		retBreatherCut = i;
+        currentArray = currentArray.slice(13).concat(currentArray.slice(0, 13));
+        detailSubroutine(currentArray, guessedCard, guessedPosition, i.toString());
+        if (retHitIndicator === "Y") {
+			i = 9;
+			// making i greater than 3 to stop the loop because of a hit
+		}
+   }
   }
+} // End of intermediateSubroutine
 
-  // When a number is selected, save the value and close Modal 1 immediately.
-  cardNumberSelect.addEventListener("change", function () {
-    if (cardNumberSelect.value !== "") {
-      selectedDropdownValue = cardNumberSelect.value;
-      document.getElementById("selectedDropdownDisplay").textContent =
-        "Dropdown selection: " + selectedDropdownValue;
-      // Close Modal 1.
-      const dropdownModalEl = document.getElementById("dropdownModal");
-      let modalInstance = bootstrap.Modal.getInstance(dropdownModalEl);
-      if (!modalInstance) {
-        modalInstance = new bootstrap.Modal(dropdownModalEl);
-      }
-      modalInstance.hide();
+// Main entry point to main program
+document.getElementById("calcForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const stackType = document.getElementById("stackType").value;
+    const guessedCard = document.getElementById("guessedCard").value.toUpperCase();
+    const guessedPosition = parseInt(document.getElementById("guessedPosition").value);
+
+    if (!masterArrays[stackType] || !guessedCard || isNaN(guessedPosition) || guessedPosition < 1 || guessedPosition > 52) {
+        document.getElementById("result").innerHTML = "Invalid input. Please check stack type, card format (e.g., 9S), and position (1-52).";
+        return;
     }
-  });
-// Array of card codes in new deck order.
-const cardCodes = [
-  "AC", "2C", "3C", "4C", "5C", "6C", "7C", "8C", "9C", "TC", "JC", "QC", "KC",
-  "AD", "2D", "3D", "4D", "5D", "6D", "7D", "8D", "9D", "TD", "JD", "QD", "KD",
-  "AH", "2H", "3H", "4H", "5H", "6H", "7H", "8H", "9H", "TH", "JH", "QH", "KH",
-  "AS", "2S", "3S", "4S", "5S", "6S", "7S", "8S", "9S", "TS", "JS", "QS", "KS"
-];
 
-// Mapping objects for display names.
-const rankMap = {
-  'A': 'Ace',
-  '2': 'Two',
-  '3': 'Three',
-  '4': 'Four',
-  '5': 'Five',
-  '6': 'Six',
-  '7': 'Seven',
-  '8': 'Eight',
-  '9': 'Nine',
-  'T': 'Ten',
-  'J': 'Jack',
-  'Q': 'Queen',
-  'K': 'King'
-};
+    const workArray = masterArrays[stackType];
 
-const suitMap = {
-  'C': 'Clubs',
-  'D': 'Diamonds',
-  'H': 'Hearts',
-  'S': 'Spades'
-};
+    // Here we have the input selections, now do the process
+	
+	// below is setting all the ret fields to "N" etc
+    setInitialDefaults()
+	
+    intermediateSubroutine(workArray, guessedCard, guessedPosition);
+    // above intermediateSubroutine executes the detailSubroutine maybe 4 times
+ 
+    // Here we are done therefore display some stuff and the bogus percent
+     console.log("StackType", stackType);
+	 console.log("workArray", workArray);
+	 console.log("guessedCard", guessedCard);
+	 console.log("guessedPosition", guessedPosition);
+	 console.log("### retHitIndicator ###", retHitIndicator);
+	
+    let Bogus1 = "6"; // Default for miss
+    let Bogus2 = "1";
+    let Bogus3 = "7";
+    let Bogus4 = "7";
+    let Bogus5 = "??";
 
-// Helper function to convert a card code to its full name for display.
-function getCardName(cardCode) {
-  const rank = cardCode.charAt(0);
-  const suit = cardCode.charAt(1);
-  return `${rankMap[rank]} of ${suitMap[suit]}`;
-}
 
-// Helper function to convert a card code to its corresponding image filename.
-function getImageFilename(cardCode) {
-  const rank = cardCode.charAt(0);
-  const suit = cardCode.charAt(1);
-  let rankFilename = '';
-  if (rank === 'A') rankFilename = 'ace';
-  else if (rank === 'T') rankFilename = '10';
-  else if (rank === 'J') rankFilename = 'jack';
-  else if (rank === 'Q') rankFilename = 'queen';
-  else if (rank === 'K') rankFilename = 'king';
-  else rankFilename = rank; // For '2' through '9'
-  
-  let suitFilename = '';
-  if (suit === 'C') suitFilename = 'clubs';
-  else if (suit === 'D') suitFilename = 'diamonds';
-  else if (suit === 'H') suitFilename = 'hearts';
-  else if (suit === 'S') suitFilename = 'spades';
-  
-  return `${rankFilename}_of_${suitFilename}.png`;
-}
-
-// Populate Modal 2 with card images from the "./images" folder.
-const cardsContainer = document.getElementById("cardsContainer");
-
-for (let i = 0; i < cardCodes.length; i++) {
-  const cardCode = cardCodes[i];
-  const cardName = getCardName(cardCode);
-  const filename = getImageFilename(cardCode);
-  
-  // Create a column container for the card.
-  const col = document.createElement("div");
-  col.className = "col-3 mb-3";
-  
-  // Create the image element.
-  const img = document.createElement("img");
-  img.src = `./images/${filename}`;
-  img.alt = cardName;
-  img.className = "img-fluid card-img";
-  
-  // Store the card code and name as data attributes.
-  img.dataset.cardCode = cardCode;
-  img.dataset.cardName = cardName;
-  
-  // When a card is clicked, update the display and close Modal 2.
-  img.addEventListener("click", function () {
-    // Remove the 'card-selected' class from any previously selected card.
-    document.querySelectorAll(".card-selected").forEach(card => {
-      card.classList.remove("card-selected");
-    });
-    
-    // Highlight the clicked card.
-    img.classList.add("card-selected");
-    
-    // Update the display with the full card name.
-    document.getElementById("selectedCardValueDisplay").textContent =
-      "Card: " + cardName;
-    
-    // Close Modal 2.
-    const cardsModalEl = document.getElementById("cardsModal");
-    let modalInstance = bootstrap.Modal.getInstance(cardsModalEl);
-    if (!modalInstance) {
-      modalInstance = new bootstrap.Modal(cardsModalEl);
+	Bogus5 = retBottomCard; // bottom card to make it work
+    // Check for hits
+    if (retHitIndicator === "Y") {
+        Bogus1 = "0"; // Hit
+		Bogus2 = retFaceUp === "Y" ? "3" : "0";
+        Bogus3 = retBreatherCut;
+        Bogus4 = retPlus1Hit === "Y" ? "2" : "0";
+    } else {
+        // No hit, use first result's bottom position
+           	Bogus2 = "0";
+			Bogus3 = retBottomPosition[0]; // First digit
+            Bogus4 = retBottomPosition[1]; // Second digit
+        // }
     }
-    modalInstance.hide();
-  });
-  
-  col.appendChild(img);
-  cardsContainer.appendChild(col);
-}
-
-
-  // Calculation button multiplies the dropdown selection by the card value.
-  const calcButton = document.getElementById("calcButton");
-  calcButton.addEventListener("click", function () {
-    if (!selectedDropdownValue) {
-      alert("Please select a number using the first button.");
-      return;
-    }
-    if (selectedCardValue === null) {
-      alert("Please select a card from the second modal.");
-      return;
-    }
-    const result = selectedDropdownValue * selectedCardValue;
-    alert(`Calculation result: ${selectedDropdownValue} x ${selectedCardValue} = ${result}`);
-  });
+	 console.log("Bogus1", Bogus1);
+	 console.log("Bogus2", Bogus2);
+	 console.log("Bogus3", Bogus3);
+	 console.log("Bogus4", Bogus4);
+	 console.log("Bogus5", Bogus5);
+    const fudgePct = `${Bogus1}.${Bogus2}${Bogus3}${Bogus4}--${Bogus5}`;
+    document.getElementById("result").innerHTML = `Fudge Percentage: ${fudgePct}`;
 });

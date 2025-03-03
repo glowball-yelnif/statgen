@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HiggsCalc - Card Magic Tool</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
@@ -19,15 +19,43 @@
                 <option value="T">Tritium (T)</option>
                 <option value="S">StebbinsChased8S (S)</option>
                 <option value="K">StebbinsShocked8S (K)</option>
-            </select><br><br>
-            <label for="guessedCard">Guessed Card (e.g., 9S):</label>
-            <input type="text" id="guessedCard" required><br><br>
-            <label for="guessedPosition">Guessed Position (1-52):</label>
-            <input type="number" id="guessedPosition" min="1" max="52" required><br><br>
+            </select>
+            
+            <label>Guessed Card:</label>
+            <div class="selection-display" id="cardDisplay" onclick="openCardModal()">Click to select a card</div>
+            <input type="hidden" id="guessedCard" required>
+            
+            <label>Guessed Position:</label>
+            <div class="selection-display" id="positionDisplay" onclick="openPositionModal()">Click to select a position</div>
+            <input type="hidden" id="guessedPosition" min="1" max="52" required>
+            
             <button type="submit">Calculate</button>
         </form>
         <div id="result"></div>
     </div>
+    
+    <div id="cardModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeCardModal()">&times;</span>
+            <h2>Select a Card</h2>
+            <div class="card-grid" id="cardGrid"></div>
+            <div class="modal-footer">
+                <button onclick="confirmCardSelection()">Confirm Selection</button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="positionModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closePositionModal()">&times;</span>
+            <h2>Select a Position</h2>
+            <div class="position-grid" id="positionGrid"></div>
+            <div class="modal-footer">
+                <button onclick="confirmPositionSelection()">Confirm Selection</button>
+            </div>
+        </div>
+    </div>
+    
     <script src="script.js"></script>
 </body>
 </html>

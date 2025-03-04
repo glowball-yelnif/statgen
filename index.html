@@ -10,26 +10,26 @@
     <div class="container">
         <h1>HiggsCalc</h1>
         <form id="calcForm">
-            <label for="stackType">Stack Type:</label>
+            <label for="stackType">Statistical Method:</label>
             <select id="stackType" required>
-                <option value="A">Aronson (A)</option>
-                <option value="M">Mnemonica (M)</option>
-                <option value="W">Woody (W)</option>
-                <option value="R">Redford (R)</option>
-                <option value="T">Tritium (T)</option>
-                <option value="S">StebbinsChased8S (S)</option>
-                <option value="K">StebbinsShocked8S (K)</option>
+                <option value="A">Aronistic (A)</option>
+                <option value="M">Mnemonistic (M)</option>
+                <option value="W">Whitesan (W)</option>
+                <option value="R">Redfordian (R)</option>
+                <option value="T">Tritium/Larfin (T)</option>
+                <option value="S">Stebchastic.8S (S)</option>
+                <option value="K">Stebshockin.8s (K)</option>
             </select>
             
-            <label>Guessed Card:</label>
-            <div class="selection-display" id="cardDisplay" onclick="openCardModal()">Click to select a card</div>
+            <label>Playing Card:</label>
+            <div class="selection-display" id="cardDisplay" onclick="openCardModal()">select a card</div>
             <input type="hidden" id="guessedCard" required>
             
-            <label>Guessed Position:</label>
-            <div class="selection-display" id="positionDisplay" onclick="openPositionModal()">Click to select a position</div>
+            <label>Position:</label>
+            <div class="selection-display" id="positionDisplay" onclick="openPositionModal()">select a position</div>
             <input type="hidden" id="guessedPosition" min="1" max="52" required>
             
-            <button type="submit">Calculate</button>
+            <button type="submit">Calculate Historic Percentage</button>
         </form>
         <div id="result"></div>
     </div>
@@ -39,9 +39,7 @@
             <span class="close" onclick="closeCardModal()">&times;</span>
             <h2>Select a Card</h2>
             <div class="card-grid" id="cardGrid"></div>
-            <div class="modal-footer">
-                <button onclick="confirmCardSelection()">Confirm Selection</button>
-            </div>
+          
         </div>
     </div>
     
@@ -50,9 +48,7 @@
             <span class="close" onclick="closePositionModal()">&times;</span>
             <h2>Select a Position</h2>
             <div class="position-grid" id="positionGrid"></div>
-            <div class="modal-footer">
-                <button onclick="confirmPositionSelection()">Confirm Selection</button>
-            </div>
+          
         </div>
     </div>
     

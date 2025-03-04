@@ -1,5 +1,13 @@
 /* style.css */
-* {
+* 
+    .selection-display {
+            cursor: pointer;
+            padding: 10px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+{
     box-sizing: border-box;
     font-family: Arial, sans-serif;
 }

@@ -62,7 +62,7 @@
             const cardGrid = document.getElementById('cardGrid');
             cardGrid.innerHTML = '';
             
-            const suits = ['S', 'H', 'D', 'C'];
+            const suits = ['S', 'H', 'C', 'D' ];
             const values = ['A', '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K'];
             
             suits.forEach(suit => {
@@ -152,6 +152,10 @@
             // Add selected class to clicked card
             cardElement.classList.add('selected');
             selectedCard = cardElement.dataset.card;
+			document.getElementById('guessedCard').value = selectedCard;
+                document.getElementById('cardDisplay').textContent = `Selected Card: ${selectedCard}`;
+                closeCardModal();
+			closeCardModal();
         }
         
         // Select a position
@@ -163,29 +167,11 @@
             // Add selected class to clicked position
             posElement.classList.add('selected');
             selectedPosition = posElement.dataset.position;
-        }
-        
-        // Confirm card selection
-        function confirmCardSelection() {
-            if (selectedCard) {
-                document.getElementById('guessedCard').value = selectedCard;
-                document.getElementById('cardDisplay').textContent = `Selected Card: ${selectedCard}`;
-                closeCardModal();
-            } else {
-                alert('Please select a card');
-            }
-        }
-        
-        // Confirm position selection
-        function confirmPositionSelection() {
-            if (selectedPosition) {
-                document.getElementById('guessedPosition').value = selectedPosition;
+			    document.getElementById('guessedPosition').value = selectedPosition;
                 document.getElementById('positionDisplay').textContent = `Selected Position: ${selectedPosition}`;
                 closePositionModal();
-            } else {
-                alert('Please select a position');
-            }
         }
+  
         
         // All the calculation functions from your original code
         function setInitialDefaults() {
@@ -298,8 +284,15 @@
                 Bogus4 = retBottomPosition[1]; // Second digit
             }
             
-            const fudgePct = `${Bogus1}.${Bogus2}${Bogus3}${Bogus4}--${Bogus5}`;
-            document.getElementById("result").innerHTML = `Fudge Percentage: ${fudgePct}`;
+	 console.log("Bogus1", Bogus1);
+	 console.log("Bogus2", Bogus2);
+	 console.log("Bogus3", Bogus3);
+	 console.log("Bogus4", Bogus4);
+	 console.log("Bogus5", Bogus5);					
+			
+            const fudgePct = `${Bogus1}.${Bogus2}${Bogus3}${Bogus4}`;;
+			//--${Bogus5}`;
+            document.getElementById("result").innerHTML = `Historic Percentage: ${fudgePct}`;
         });
         
         // Initialize
